@@ -39,7 +39,7 @@ for op, value in opts:
         print "-d ...  driver path"
         print ""
         print "Please download the chrome driver before use"
-        print "driver download and version, CSDN link ：http://blog.csdn.net/huilan_same/article/details/51896672"
+        print "driver download and version, CSDN link ：http://blog.csdn.net/chaomaster/article/details/52963265"
         print "when the script exit ,we must log out the remedy"
         print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
         sys.exit()
@@ -49,7 +49,7 @@ if len(sys.argv) < 4:
     sys.exit()
 
 
-# 驱动配置及下载 CSDN 连接 ：http://blog.csdn.net/huilan_same/article/details/51896672
+# 驱动配置及下载 CSDN 连接 ：http://blog.csdn.net/chaomaster/article/details/52963265
 
 # browser = webdriver.Firefox(executable_path='/Users/xuechao/seleniumSupport/geckodriver')
 browser = webdriver.Chrome(executable_path=driverpath)
