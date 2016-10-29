@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- coding: GBK -*-
 
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
@@ -12,7 +12,7 @@ import time
 import sys
 import getopt
 
-def isElementExist(element):  # åˆ¤æ–­å‡½æ•°
+def isElementExist(element):  # ÅÐ¶Ïº¯Êý
     flag = True
     try:
         browser.find_element_by_xpath(element)
@@ -39,7 +39,7 @@ for op, value in opts:
         print "-d ...  driver path"
         print ""
         print "Please download the chrome driver before use"
-        print "driver download and version, CSDN link ï¼šhttp://blog.csdn.net/chaomaster/article/details/52963265"
+        print "driver download and version, CSDN link £ºhttp://blog.csdn.net/chaomaster/article/details/52963265"
         print "when the script exit ,we must log out the remedy"
         print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
         sys.exit()
@@ -49,7 +49,7 @@ if len(sys.argv) < 4:
     sys.exit()
 
 
-# é©±åŠ¨é…ç½®åŠä¸‹è½½ CSDN è¿žæŽ¥ ï¼šhttp://blog.csdn.net/chaomaster/article/details/52963265
+# Çý¶¯ÅäÖÃ¼°ÏÂÔØ CSDN Á¬½Ó £ºhttp://blog.csdn.net/chaomaster/article/details/52963265
 
 # browser = webdriver.Firefox(executable_path='/Users/xuechao/seleniumSupport/geckodriver')
 browser = webdriver.Chrome(executable_path=driverpath)
@@ -58,19 +58,22 @@ browser.get('https://chinabluemix.itsm.unisysedge.cn/arsys/shared/loggedout.jsp'
 browser.implicitly_wait(30)
 
 
-# ç™»å½• remedy
+# µÇÂ¼ remedy
 browser.find_element_by_id('username-id').send_keys(username)
 browser.find_element_by_id('pwd-id').send_keys(password)
 browser.find_element_by_id('loginText').click()
 
 
-# å¤„ç†æµç¨‹
-locator1 = (By.XPATH, ".//*[@id='WIN_1_304017100']/div/div")  # å®šä½å·²æŒ‡æ´¾é¡µé¢æŒ‰é’®
-locator2 = (By.CSS_SELECTOR, ".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")  # å®šä½ ticket
+# ´¦ÀíÁ÷³Ì
+locator1 = (By.XPATH, ".//*[@id='WIN_1_304017100']/div/div")  # ¶¨Î»ÒÑÖ¸ÅÉÒ³Ãæ°´Å¥
+locator2 = (By.CSS_SELECTOR, ".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")  # ¶¨Î» ticket
 
-# æ·»åŠ æ­»å¾ªçŽ¯
+# Ìí¼ÓËÀÑ­»·
 
-i = 1  # è®¡æ•°
+i = 1  # ¼ÆÊý
+
+enTestString = "test"
+cnTestString = u"²âÊÔ"
 
 while True :
     try:
@@ -79,19 +82,23 @@ while True :
 
     finally:
         try:
-            WebDriverWait(browser, 30000000, 0.5).until(EC.visibility_of_element_located(locator2))  # æ¨¡æ‹Ÿç­‰å¾… æ—¶é—´æ— é™å¤§
-            doubleClickArea = browser.find_element_by_css_selector(
+            WebDriverWait(browser, 30000000, 0.5).until(EC.visibility_of_element_located(locator2))  # Ä£ÄâµÈ´ý Ê±¼äÎÞÏÞ´ó
+
+            testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text
+            if ((enTestString in testString) == False) and ((cnTestString in testString) == False):
+                doubleClickArea = browser.find_element_by_css_selector(
                 ".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")
-            ActionChains(browser).double_click(doubleClickArea).perform()
+                ActionChains(browser).double_click(doubleClickArea).perform()
+
         finally:
             try:
-                browser.find_element_by_xpath(".//*[@id='arid_WIN_2_536870940']").send_keys("in progress")  # æ·»åŠ åˆå§‹å“åº”
+                browser.find_element_by_xpath(".//*[@id='arid_WIN_2_536870940']").send_keys("in progress")  # Ìí¼Ó³õÊ¼ÏìÓ¦
 
-                browser.find_element_by_xpath(".//*[@id='WIN_2_536870924']/div/div").click()  # å—ç†
+                browser.find_element_by_xpath(".//*[@id='WIN_2_536870924']/div/div").click()  # ÊÜÀí
                 print "already deal " + str(i) + " ticket"
                 i += 1
                 time.sleep(2)
-                browser.refresh()  # æµè§ˆå™¨åˆ·æ–°
+                browser.refresh()  # ä¯ÀÀÆ÷Ë¢ÐÂ
             except:
                 browser.refresh()
 
@@ -104,13 +111,13 @@ while True :
 #     WebDriverWait(browser, 30, 0.5).until(EC.visibility_of_element_located(locator2))
 #     doubleClickArea = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[@class='BaseTableCellOdd BaseTableCellOddColor BaseTableStaticText'][1]")
 #     ActionChains(browser).double_click(doubleClickArea).perform()
-#     print 'èŽ·å–æˆåŠŸ'
+#     print '»ñÈ¡³É¹¦'
 # finally:
 #     browser.close()
 
 
-# æ³¨é”€ remedy
-# print 'å¼€å§‹æ³¨é”€'
+# ×¢Ïú remedy
+# print '¿ªÊ¼×¢Ïú'
 # browser.find_element_by_xpath('.//*[@id="WIN_0_300000044"]/div/div').click()
 #
 #
