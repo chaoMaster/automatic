@@ -84,7 +84,7 @@ while True :
         try:
             WebDriverWait(browser, 30000000, 0.5).until(EC.visibility_of_element_located(locator2))  # 模拟等待 时间无限大
 
-            testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text
+            testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text # 过滤 测试 或者 test
             if ((enTestString in testString) == False) and ((cnTestString in testString) == False):
                 doubleClickArea = browser.find_element_by_css_selector(
                 ".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")
