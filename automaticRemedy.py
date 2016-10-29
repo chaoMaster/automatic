@@ -118,4 +118,3 @@ while True :
 #
 # browser.quit()
 
-print "browser is closed"
