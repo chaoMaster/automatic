@@ -27,11 +27,9 @@
         添加配置文件，更换启动方式为配置文件启动
         
         配置文件格式：（以 config.ini 命名）请将 remedy 登录信息以及本地 chrome 驱动路径填写在配置文件中
-        
+        ```objc
             [info]
-            
             username = xxxxx
-            
             password = ******
-            
             driverpath = /xxx/xxxx/chromedriver
+        ```
