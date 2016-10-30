@@ -84,7 +84,7 @@ i = 1  # ¼ÆÊý
 enTestString = "test"
 cnTestString = u"²âÊÔ"
 
-while True :
+while True:
     try:
         WebDriverWait(browser, 30, 0.5).until(EC.visibility_of_element_located(locator1))
         browser.find_element_by_xpath(".//*[@id='WIN_1_304017100']/div/div").click()
