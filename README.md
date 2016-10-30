@@ -12,6 +12,8 @@
   -d ———— driver 路径
 
 # 注意事项：
+  使用前请下载 chrome 驱动，驱动详情：http://blog.csdn.net/chaomaster/article/details/52963265
+
   脚本启动时，务必添加所有参数（-u  -p  -d）
   
   由于 remedy 网站不可重复登录，所以脚本退出时务必先将 remedy 账号注销登录，以免下次使用时出现登录异常。
