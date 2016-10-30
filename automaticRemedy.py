@@ -11,6 +11,7 @@ import time
 
 import sys
 import getopt
+import ConfigParser
 
 def isElementExist(element):  # 判断函数
     flag = True
@@ -21,22 +22,18 @@ def isElementExist(element):  # 判断函数
         flag = False
         return flag
 
-opts, args = getopt.getopt(sys.argv[1:], "hu:p:d:")
+opts, args = getopt.getopt(sys.argv[1:], "hc:")
 username = ""
 password = ""
 driverpath = ""
 
+configPath = ""
+
 for op, value in opts:
-    if op == "-u":
-        username = value
-    elif op == "-p":
-        password = value
-    elif op == "-d":
-        driverpath = value
+    if op == "-c":
+        configPath = value
     elif op == "-h":
-        print "-u ...  username"
-        print "-p ...  password"
-        print "-d ...  driver path"
+        print "-c -------- config file path"
         print ""
         print "Please download the chrome driver before use"
         print "driver download and version, CSDN link ：http://blog.csdn.net/chaomaster/article/details/52963265"
@@ -44,10 +41,22 @@ for op, value in opts:
         print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
         sys.exit()
 
-if len(sys.argv) < 4:
-    print "please input parameters ... use '-h' to see help "
+if not configPath:
+    print "please input config file path use '-c' "
+    print "please use '-h' to help"
     sys.exit()
 
+config = ConfigParser.ConfigParser()
+with open(configPath, 'r+') as cfgfile:
+    config.readfp(cfgfile)
+
+username = config.get("info", "username")
+password = config.get("info", "password")
+driverpath = config.get("info", "driverpath")
+
+if (not username) or (not password) or (not driverpath):
+    print "Please send the user name, password, drive path to configuration file, such as config.ini "
+    sys.exit()
 
 # 驱动配置及下载 CSDN 连接 ：http://blog.csdn.net/chaomaster/article/details/52963265
 
