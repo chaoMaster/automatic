@@ -32,6 +32,7 @@
             username = xxxxx
             password = ******
             driverpath = /xxx/xxxx/chromedriver
+            audiopath = file:///Users/xxxx/Desktop/1234.mp3
 ```
   v1.3 ------
         新增提醒功能模块
