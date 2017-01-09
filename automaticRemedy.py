@@ -15,10 +15,11 @@ import ConfigParser
 import re
 import subprocess
 import threading
+import platform
 
 def NetCheck(ip):   #检测网络状况
     try:
-        p = subprocess.Popen(["ping -c 1 -W 5 "+ ip], stdout= subprocess.PIPE, stderr= subprocess.PIPE,shell=True)
+        p = subprocess.Popen(["ping -c 4 -W 5 "+ ip], stdout= subprocess.PIPE, stderr= subprocess.PIPE,shell=True)
         out = p.stdout.read()
         err = p.stderr.read()
         regex1 = re.compile("100.0% packet loss")
@@ -38,12 +39,13 @@ def NetCheck(ip):   #检测网络状况
 def threadOffline(threadName, delay):
     i = 1
     while True:
-        time.sleep(10)
-        flag = NetCheck("www.baidu.com")
+        time.sleep(180)
+        flag1 = NetCheck("www.baidu.com")
+        flag2 = NetCheck("chinabluemix.itsm.unisysedge.cn")
         # print flag
         # print i
         # i += 1
-        if flag == False:
+        if (flag1 == False) and (flag2 == False):
             print u"网络连接失败"
             offlineBrowser = webdriver.Chrome(executable_path=driverpath)
             offlineBrowser.get(audioPath)
@@ -123,7 +125,9 @@ def threadMain(threadName, delay):
 
     i = 1  # 计数
 
-    enTestString = "test"
+    enTestString = "Test"
+    enTestString2 = "Test"
+    enTestString3 = "TEST"
     cnTestString = u"测试"
 
     while True:
@@ -137,10 +141,13 @@ def threadMain(threadName, delay):
                     WebDriverWait(browser, 30000000, 0.5).until(EC.visibility_of_element_located(locator2))  # 模拟等待 时间无限大
 
                     testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text # 过滤 测试 或者 test
-                    if ((enTestString in testString) == False) and ((cnTestString in testString) == False):
+                    if ((enTestString in testString) == False) and ((cnTestString in testString) == False) and ((enTestString2 in testString) == False) and ((enTestString3 in testString) == False):
                         doubleClickArea = browser.find_element_by_css_selector(".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")
                         ActionChains(browser).double_click(doubleClickArea).perform()
-
+                    else:
+                        print "【test】 ticket, please manual processing"
+                        alertBrowser = webdriver.Chrome(executable_path=driverpath)
+                        alertBrowser.get(audioPath)
                 finally:
                     try:
                         browser.find_element_by_xpath(".//*[@id='arid_WIN_2_536870940']").send_keys("in progress")  # 添加初始响应
@@ -153,6 +160,7 @@ def threadMain(threadName, delay):
                     except:
                         browser.refresh()
             except:
+                print u"获取元素失败，请正常登出后重启脚本"
                 alertBrowser = webdriver.Chrome(executable_path=driverpath)
                 alertBrowser.get(audioPath)
                 # print audioPath
