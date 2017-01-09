@@ -19,19 +19,40 @@ import platform
 
 def NetCheck(ip):   #检测网络状况
     try:
-        p = subprocess.Popen(["ping -c 4 -W 5 "+ ip], stdout= subprocess.PIPE, stderr= subprocess.PIPE,shell=True)
-        out = p.stdout.read()
-        err = p.stderr.read()
-        regex1 = re.compile("100.0% packet loss")
-        regex2 = re.compile("100% packet loss")
-        # print out
-        # print err
-        if (len(regex1.findall(out)) == 0) and (len(regex2.findall(out)) == 0) and ((len(err)) == 0):
-            # print ip + ' online'
-            return True
+        if platform.system() == "Windows":
+            # print "正确进入 windows 分支"
+            p = subprocess.Popen(["ping", "-n", "4", ip],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            outW = p.stdout.read()
+            errW = p.stderr.read()
+            regex1 = re.compile("100%")
+            regex2 = re.compile("找不到主机")
+            # print ""
+            # print "outW"
+            # print outW
+            # print ""
+            # print "errW"
+            # print errW
+            # print ""
+            if (len(regex1.findall(outW))) or (len(regex2.findall(outW))):
+                # print ip + " online"
+                return False
+            else:
+                # print ip + " offline"
+                return True
         else:
-            # print ip + ' offine'
-            return False
+            p = subprocess.Popen(["ping", "-c", "4", ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            out = p.stdout.read()
+            err = p.stderr.read()
+            regex1 = re.compile("100.0% packet loss")
+            regex2 = re.compile("100% packet loss")
+            # print out
+            # print err
+            if (len(regex1.findall(out)) == 0) and (len(regex2.findall(out)) == 0) and ((len(err)) == 0):
+                # print ip + ' online'
+                return True
+            else:
+                # print ip + ' offine'
+                return False
     except:
         print "NetCheck work error"
         return False
@@ -67,23 +88,28 @@ username = ""
 password = ""
 driverpath = ""
 
-configPath = ""
+configPath = "config.ini"
 
-for op, value in opts:
-    if op == "-c":
-        configPath = value
-    elif op == "-h":
-        print "-c -------- config file path"
-        print ""
-        print "Please download the chrome driver before use"
-        print "driver download and version, CSDN link ：http://blog.csdn.net/chaomaster/article/details/52963265"
-        print "when the script exit ,we must log out the remedy"
-        print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
-        sys.exit()
+# for op, value in opts:
+#     if op == "-c":
+#         configPath = value
+#     elif op == "-h":
+#         print "-c -------- config file path"
+#         print ""
+#         print "Please download the chrome driver before use"
+#         print "driver download and version, CSDN link ：http://blog.csdn.net/chaomaster/article/details/52963265"
+#         print "when the script exit ,we must log out the remedy"
+#         print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
+#         sys.exit()
 
 if not configPath:
     print "please input config file path use '-c' "
     print "please use '-h' to help"
+    print ""
+    print "Please download the chrome driver before use"
+    print "driver download and version, CSDN link ：http://blog.csdn.net/chaomaster/article/details/52963265"
+    print "when the script exit ,we must log out the remedy"
+    print "Please ensure that the configuration file's parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
     sys.exit()
 
 config = ConfigParser.ConfigParser()
@@ -154,9 +180,16 @@ def threadMain(threadName, delay):
 
                         browser.find_element_by_xpath(".//*[@id='WIN_2_536870924']/div/div").click()  # 受理
                         print "already deal " + str(i) + " ticket"
+                        print "ticket summary: " + testString
                         i += 1
                         time.sleep(2)
                         browser.refresh()  # 浏览器刷新
+                        timeString = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))  # 获取当前时间
+                        f = open("ticket.log", "a+")
+                        f.read()
+                        f.write(timeString + " " + testString + "\n")
+                        f.close()
+                        time.sleep(3)
                     except:
                         browser.refresh()
             except:
