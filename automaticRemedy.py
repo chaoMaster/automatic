@@ -102,24 +102,33 @@ configPath = "config.ini"
 #         print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
 #         sys.exit()
 
-if not configPath:
-    print "please input config file path use '-c' "
-    print "please use '-h' to help"
-    print ""
-    print "Please download the chrome driver before use"
-    print "driver download and version, CSDN link £ºhttp://blog.csdn.net/chaomaster/article/details/52963265"
-    print "when the script exit ,we must log out the remedy"
-    print "Please ensure that the configuration file's parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
-    sys.exit()
+# if not configPath:
+#     print "ERR : no configuration \n"
+#     print "please create configuration file\n"
+#     print ""
+#     print "Please download the chrome driver before use"
+#     print "driver download and version, CSDN link £ºhttp://blog.csdn.net/chaomaster/article/details/52963265"
+#     print "when the script exit ,we must log out the remedy"
+#     print "Please ensure that the configuration file's parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
+#     sys.exit()
 
-config = ConfigParser.ConfigParser()
-with open(configPath, 'r+') as cfgfile:
-    config.readfp(cfgfile)
+try:
+    config = ConfigParser.ConfigParser()
+    with open(configPath, 'r+') as cfgfile:
+        config.readfp(cfgfile)
 
-username = config.get("info", "username")
-password = config.get("info", "password")
-driverpath = config.get("info", "driverpath")
-audioPath = config.get("info", "audiopath")
+    username = config.get("info", "username")
+    password = config.get("info", "password")
+    driverpath = config.get("info", "driverpath")
+    audioPath = config.get("info", "audiopath")
+except:
+    print "ERR : no configuration \n"
+    print "please create configuration file\n"
+    print "configuration must be renamed config.ini\n"
+    print "configuration need to fill username .password .driverPath .audioPath\n"
+    print "driver download and version, CSDN link : http://blog.csdn.net/chaomaster/article/details/52963265\n"
+    print "the script will be exit in 5 second\n"
+    time.sleep(5)
 
 if (not username) or (not password) or (not driverpath):
     print "Please send the user name, password, drive path to configuration file, such as config.ini "
