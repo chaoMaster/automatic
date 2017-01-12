@@ -17,21 +17,42 @@ import subprocess
 import threading
 import platform
 
-def NetCheck(ip):   #¼ì²âÍøÂç×´¿ö
+def NetCheck(ip):   #æ£€æµ‹ç½‘ç»œçŠ¶å†µ
     try:
-        p = subprocess.Popen(["ping -c 4 -W 5 "+ ip], stdout= subprocess.PIPE, stderr= subprocess.PIPE,shell=True)
-        out = p.stdout.read()
-        err = p.stderr.read()
-        regex1 = re.compile("100.0% packet loss")
-        regex2 = re.compile("100% packet loss")
-        # print out
-        # print err
-        if (len(regex1.findall(out)) == 0) and (len(regex2.findall(out)) == 0) and ((len(err)) == 0):
-            # print ip + ' online'
-            return True
+        if platform.system() == "Windows":
+            # print "æ­£ç¡®è¿›å…¥ windows åˆ†æ”¯"
+            p = subprocess.Popen(["ping", "-n", "4", ip],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            outW = p.stdout.read()
+            errW = p.stderr.read()
+            regex1 = re.compile("100%")
+            regex2 = re.compile("æ‰¾ä¸åˆ°ä¸»æœº")
+            # print ""
+            # print "outW"
+            # print outW
+            # print ""
+            # print "errW"
+            # print errW
+            # print ""
+            if (len(regex1.findall(outW))) or (len(regex2.findall(outW))):
+                # print ip + " online"
+                return False
+            else:
+                # print ip + " offline"
+                return True
         else:
-            # print ip + ' offine'
-            return False
+            p = subprocess.Popen(["ping", "-c", "4", ip], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            out = p.stdout.read()
+            err = p.stderr.read()
+            regex1 = re.compile("100.0% packet loss")
+            regex2 = re.compile("100% packet loss")
+            # print out
+            # print err
+            if (len(regex1.findall(out)) == 0) and (len(regex2.findall(out)) == 0) and ((len(err)) == 0):
+                # print ip + ' online'
+                return True
+            else:
+                # print ip + ' offine'
+                return False
     except:
         print "NetCheck work error"
         return False
@@ -46,12 +67,12 @@ def threadOffline(threadName, delay):
         # print i
         # i += 1
         if (flag1 == False) and (flag2 == False):
-            print u"ÍøÂçÁ¬½ÓÊ§°Ü"
+            print u"ç½‘ç»œè¿æ¥å¤±è´¥"
             offlineBrowser = webdriver.Chrome(executable_path=driverpath)
             offlineBrowser.get(audioPath)
             break
 
-# def isElementExist(element):  # ÅĞ¶Ïº¯Êı
+# def isElementExist(element):  # åˆ¤æ–­å‡½æ•°
 #     flag = True
 #     try:
 #         browser.find_element_by_xpath(element)
@@ -67,33 +88,47 @@ username = ""
 password = ""
 driverpath = ""
 
-configPath = ""
+configPath = "config.ini"
 
-for op, value in opts:
-    if op == "-c":
-        configPath = value
-    elif op == "-h":
-        print "-c -------- config file path"
-        print ""
-        print "Please download the chrome driver before use"
-        print "driver download and version, CSDN link £ºhttp://blog.csdn.net/chaomaster/article/details/52963265"
-        print "when the script exit ,we must log out the remedy"
-        print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
-        sys.exit()
+# for op, value in opts:
+#     if op == "-c":
+#         configPath = value
+#     elif op == "-h":
+#         print "-c -------- config file path"
+#         print ""
+#         print "Please download the chrome driver before use"
+#         print "driver download and version, CSDN link ï¼šhttp://blog.csdn.net/chaomaster/article/details/52963265"
+#         print "when the script exit ,we must log out the remedy"
+#         print "Please ensure that the parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
+#         sys.exit()
 
-if not configPath:
-    print "please input config file path use '-c' "
-    print "please use '-h' to help"
-    sys.exit()
+# if not configPath:
+#     print "ERR : no configuration \n"
+#     print "please create configuration file\n"
+#     print ""
+#     print "Please download the chrome driver before use"
+#     print "driver download and version, CSDN link ï¼šhttp://blog.csdn.net/chaomaster/article/details/52963265"
+#     print "when the script exit ,we must log out the remedy"
+#     print "Please ensure that the configuration file's parameters of the input is correct, otherwise may cause driver abnormal or logon failure"
+#     sys.exit()
 
-config = ConfigParser.ConfigParser()
-with open(configPath, 'r+') as cfgfile:
-    config.readfp(cfgfile)
+try:
+    config = ConfigParser.ConfigParser()
+    with open(configPath, 'r+') as cfgfile:
+        config.readfp(cfgfile)
 
-username = config.get("info", "username")
-password = config.get("info", "password")
-driverpath = config.get("info", "driverpath")
-audioPath = config.get("info", "audiopath")
+    username = config.get("info", "username")
+    password = config.get("info", "password")
+    driverpath = config.get("info", "driverpath")
+    audioPath = config.get("info", "audiopath")
+except:
+    print "ERR : no configuration \n"
+    print "please create configuration file\n"
+    print "configuration must be renamed config.ini\n"
+    print "configuration need to fill username .password .driverPath .audioPath\n"
+    print "driver download and version, CSDN link : http://blog.csdn.net/chaomaster/article/details/52963265\n"
+    print "the script will be exit in 5 second\n"
+    time.sleep(5)
 
 if (not username) or (not password) or (not driverpath):
     print "Please send the user name, password, drive path to configuration file, such as config.ini "
@@ -102,7 +137,7 @@ if (not username) or (not password) or (not driverpath):
 def threadMain(threadName, delay):
 
 
-# Çı¶¯ÅäÖÃ¼°ÏÂÔØ CSDN Á¬½Ó £ºhttp://blog.csdn.net/chaomaster/article/details/52963265
+# é©±åŠ¨é…ç½®åŠä¸‹è½½ CSDN è¿æ¥ ï¼šhttp://blog.csdn.net/chaomaster/article/details/52963265
 
 # browser = webdriver.Firefox(executable_path='/Users/xuechao/seleniumSupport/geckodriver')
     browser = webdriver.Chrome(executable_path=driverpath)
@@ -111,24 +146,24 @@ def threadMain(threadName, delay):
     browser.implicitly_wait(30)
 
 
-# µÇÂ¼ remedy
+# ç™»å½• remedy
     browser.find_element_by_id('username-id').send_keys(username)
     browser.find_element_by_id('pwd-id').send_keys(password)
     browser.find_element_by_id('loginText').click()
 
 
-# ´¦ÀíÁ÷³Ì
-    locator1 = (By.XPATH, ".//*[@id='WIN_1_304017100']/div/div")  # ¶¨Î»ÒÑÖ¸ÅÉÒ³Ãæ°´Å¥
-    locator2 = (By.CSS_SELECTOR, ".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")  # ¶¨Î» ticket
+# å¤„ç†æµç¨‹
+    locator1 = (By.XPATH, ".//*[@id='WIN_1_304017100']/div/div")  # å®šä½å·²æŒ‡æ´¾é¡µé¢æŒ‰é’®
+    locator2 = (By.CSS_SELECTOR, ".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")  # å®šä½ ticket
 
-# Ìí¼ÓËÀÑ­»·
+# æ·»åŠ æ­»å¾ªç¯
 
-    i = 1  # ¼ÆÊı
+    i = 1  # è®¡æ•°
 
     enTestString = "Test"
     enTestString2 = "Test"
     enTestString3 = "TEST"
-    cnTestString = u"²âÊÔ"
+    cnTestString = u"æµ‹è¯•"
 
     while True:
         try:
@@ -138,29 +173,36 @@ def threadMain(threadName, delay):
         finally:
             try:
                 try:
-                    WebDriverWait(browser, 30000000, 0.5).until(EC.visibility_of_element_located(locator2))  # Ä£ÄâµÈ´ı Ê±¼äÎŞÏŞ´ó
+                    WebDriverWait(browser, 30000000, 0.5).until(EC.visibility_of_element_located(locator2))  # æ¨¡æ‹Ÿç­‰å¾… æ—¶é—´æ— é™å¤§
 
-                    testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text # ¹ıÂË ²âÊÔ »òÕß test
+                    testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text # è¿‡æ»¤ æµ‹è¯• æˆ–è€… test
                     if ((enTestString in testString) == False) and ((cnTestString in testString) == False) and ((enTestString2 in testString) == False) and ((enTestString3 in testString) == False):
                         doubleClickArea = browser.find_element_by_css_selector(".BaseTableCellOdd.BaseTableCellOddColor.BaseTableStaticText")
                         ActionChains(browser).double_click(doubleClickArea).perform()
                     else:
-                        print "¡¾test¡¿ ticket, please manual processing"
+                        print "ã€testã€‘ ticket, please manual processing"
                         alertBrowser = webdriver.Chrome(executable_path=driverpath)
                         alertBrowser.get(audioPath)
                 finally:
                     try:
-                        browser.find_element_by_xpath(".//*[@id='arid_WIN_2_536870940']").send_keys("in progress")  # Ìí¼Ó³õÊ¼ÏìÓ¦
+                        browser.find_element_by_xpath(".//*[@id='arid_WIN_2_536870940']").send_keys("in progress")  # æ·»åŠ åˆå§‹å“åº”
 
-                        browser.find_element_by_xpath(".//*[@id='WIN_2_536870924']/div/div").click()  # ÊÜÀí
+                        browser.find_element_by_xpath(".//*[@id='WIN_2_536870924']/div/div").click()  # å—ç†
                         print "already deal " + str(i) + " ticket"
+                        print "ticket summary: " + testString
                         i += 1
                         time.sleep(2)
-                        browser.refresh()  # ä¯ÀÀÆ÷Ë¢ĞÂ
+                        browser.refresh()  # æµè§ˆå™¨åˆ·æ–°
+                        timeString = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))  # è·å–å½“å‰æ—¶é—´
+                        f = open("ticket.log", "a+")
+                        f.read()
+                        f.write(timeString + " " + testString + "\n")
+                        f.close()
+                        time.sleep(3)
                     except:
                         browser.refresh()
             except:
-                print u"»ñÈ¡ÔªËØÊ§°Ü£¬ÇëÕı³£µÇ³öºóÖØÆô½Å±¾"
+                print u"è·å–å…ƒç´ å¤±è´¥ï¼Œè¯·æ­£å¸¸ç™»å‡ºåé‡å¯è„šæœ¬"
                 alertBrowser = webdriver.Chrome(executable_path=driverpath)
                 alertBrowser.get(audioPath)
                 # print audioPath
@@ -184,13 +226,13 @@ if __name__ == "__main__":
 #     WebDriverWait(browser, 30, 0.5).until(EC.visibility_of_element_located(locator2))
 #     doubleClickArea = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[@class='BaseTableCellOdd BaseTableCellOddColor BaseTableStaticText'][1]")
 #     ActionChains(browser).double_click(doubleClickArea).perform()
-#     print '»ñÈ¡³É¹¦'
+#     print 'è·å–æˆåŠŸ'
 # finally:
 #     browser.close()
 
 
-# ×¢Ïú remedy
-# print '¿ªÊ¼×¢Ïú'
+# æ³¨é”€ remedy
+# print 'å¼€å§‹æ³¨é”€'
 # browser.find_element_by_xpath('.//*[@id="WIN_0_300000044"]/div/div').click()
 #
 #
