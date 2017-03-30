@@ -12,7 +12,7 @@
   由于 remedy 网站不可重复登录，所以脚本退出时务必先将 remedy 账号注销登录，以免下次使用时出现登录异常。
 
 # chrome 驱动详情
-chrome 与 chromedriver 版本映射表  （表格转载自http://blog.csdn.net/huilan_same/article/details/51896672）：
+chrome 与 chromedriver 版本映射表  （表格转载自 http://blog.csdn.net/huilan_same/article/details/51896672 ）：
 ```
 chromedriver版本	    支持的Chrome版本
 v2.28	            v55-57
