@@ -69,7 +69,9 @@ try:
     password = config.get("info", "password")
     driverpath = config.get("info", "driverpath")
     audioPath = config.get("info", "audiopath")
+
     slack_channel = "#operations"
+
     slackAPP_postMessageAPI = config.get("info", "slackAPP_postMessageAPI")
     slackApp_postUser = config.get("info", "slackApp_postUser")
 except:
