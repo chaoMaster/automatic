@@ -15,6 +15,11 @@
 chrome 与 chromedriver 版本映射表  （表格转载自 http://blog.csdn.net/huilan_same/article/details/51896672 ）：
 ```
 chromedriver版本	    支持的Chrome版本
+v2.33	            v60-62
+v2.32	            v59-61
+v2.31	            v58-60
+v2.30	            v58-60
+v2.29	            v56-58
 v2.28	            v55-57
 v2.27	            v54-56
 v2.26	            v53-55
