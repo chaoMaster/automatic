@@ -69,7 +69,7 @@ try:
     password = config.get("info", "password")
     driverpath = config.get("info", "driverpath")
     audioPath = config.get("info", "audiopath")
-    slack_channel = config.get("info", "slack_channel")
+    slack_channel = "#operations"
     slackAPP_postMessageAPI = config.get("info", "slackAPP_postMessageAPI")
     slackApp_postUser = config.get("info", "slackApp_postUser")
 except:
@@ -145,7 +145,7 @@ def NetCheck(ip):   #检测网络状况
 
 def threadOffline(threadName, delay):
     i = 1
-    netMonitoringStart = {"channel": "#operations", "user": slackApp_postUser, "swi": "open"}
+    netMonitoringStart = {"channel": slack_channel, "user": slackApp_postUser, "swi": "open"}
     postNetSwitch(netMonitoringStart)
     while True:
         time.sleep(120)
@@ -158,7 +158,7 @@ def threadOffline(threadName, delay):
         # i += 1
         if (flag1 == False) and (flag2 == False):
             print u"网络连接失败"
-            netErrorNC = {"channel": "#operations", "text": slackApp_postUser + "   网络异常，请注意！！！"}
+            netErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   网络异常，请注意！！！"}
             postSlackAPP(netErrorNC)
             # netMonitoringErr = {"status": "err"}
             # postNetMonitoring(netMonitoringErr)
@@ -224,7 +224,7 @@ def threadMain(threadName, delay):
             print u"进入未受理标签失败"
             # browser.refresh()
             #     print u"获取元素失败，请正常登出后重启脚本"
-            ackErrorNC = {"channel": "#operations", "text": slackApp_postUser + "   自动受理脚本异常！！（异常详情：找不到未受理标签）"}
+            ackErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   自动受理脚本异常！！（异常详情：找不到未受理标签）"}
             postSlackAPP(ackErrorNC)
 
             # netMonitoringStop = {"status": "stop"}
@@ -284,7 +284,7 @@ def threadMain(threadName, delay):
                 except:
                     print u"受理按钮获取失败 || 添加初始响应失败"
 
-                    ackLableErrorNC = {"channel": "#operations", "text": slackApp_postUser + "   捕获异常，请检查脚本状态"}
+                    ackLableErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   捕获异常，请检查脚本状态"}
                     postSlackAPP(ackLableErrorNC)
 
                     # netMonitoringStop = {"status": "stop"}
