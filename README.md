@@ -76,3 +76,12 @@ driver 下载地址：http://chromedriver.storage.googleapis.com/index.html
          
          新增 脚本处理日志导出功能，即脚本运行过程中处理的信息会导出到文件 ticket.log
          
+  v2.1 ------
+  
+         新增 slack 提醒功能
+         
+         新增浏览器弹窗处理（些许 bug 情况特殊，需要日后使用中不断改善）
+         
+         新增网络监控 slack 提醒
+         
+         （配置文件需要修改）
