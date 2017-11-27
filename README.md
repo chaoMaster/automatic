@@ -15,6 +15,11 @@
 chrome 与 chromedriver 版本映射表  （表格转载自 http://blog.csdn.net/huilan_same/article/details/51896672 ）：
 ```
 chromedriver版本	    支持的Chrome版本
+v2.33	            v60-62
+v2.32	            v59-61
+v2.31	            v58-60
+v2.30	            v58-60
+v2.29	            v56-58
 v2.28	            v55-57
 v2.27	            v54-56
 v2.26	            v53-55
@@ -76,3 +81,14 @@ driver 下载地址：http://chromedriver.storage.googleapis.com/index.html
          
          新增 脚本处理日志导出功能，即脚本运行过程中处理的信息会导出到文件 ticket.log
          
+  v2.1 ------
+  
+         新增 slack 提醒功能
+         
+         新增浏览器弹窗处理（些许 bug 情况特殊，需要日后使用中不断改善）
+         
+         新增网络监控 slack 提醒
+         
+         （配置文件需要修改）
+         
+         由于此次更新还需完善，因此只更新源码
