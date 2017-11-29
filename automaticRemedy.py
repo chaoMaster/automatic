@@ -71,6 +71,7 @@ try:
     audioPath = config.get("info", "audiopath")
 
     slack_channel = "#operations"
+    detail_slack_notice_channel = "#random"
 
     slackAPP_postMessageAPI = config.get("info", "slackAPP_postMessageAPI")
     slackApp_postUser = config.get("info", "slackApp_postUser")
@@ -274,11 +275,25 @@ def threadMain(threadName, delay):
                     i += 1
                     time.sleep(2)
                     browser.refresh()  # 浏览器刷新
+
+                    try:   # 警告框处理
+                        browser.switch_to_alert().accept()
+                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   已确认警告弹窗"}
+                        postSlackAPP(ackAlertNC)
+                        print "已确认警告弹窗"
+                    except :
+                        print "未找到警告框"
+                        # print e
+
                     timeString = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))  # 获取当前时间
                     f = open("ticket.log", "a+")
                     f.read()
                     f.write(timeString + " " + testString + "\n")
                     f.close()
+
+                    ticketDetailNC = {"channel": detail_slack_notice_channel, "text": slackApp_postUser + u" 处理详情： " + timeString + " " + testString}
+                    postSlackAPP(ticketDetailNC)
+
                     time.sleep(3)
 
 
@@ -303,6 +318,8 @@ def threadMain(threadName, delay):
 
                     try:   # 警告框处理
                         browser.switch_to_alert().accept()
+                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   已确认警告弹窗"}
+                        postSlackAPP(ackAlertNC)
                         print "已确认警告弹窗"
                     except :
                         print "未找到警告框"
