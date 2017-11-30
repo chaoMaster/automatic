@@ -70,7 +70,7 @@ try:
     driverpath = config.get("info", "driverpath")
     audioPath = config.get("info", "audiopath")
 
-    slack_channel = "#operations"
+    slack_channel = "#remedy-stuff"
     detail_slack_notice_channel = "#random"
 
     slackAPP_postMessageAPI = config.get("info", "slackAPP_postMessageAPI")
@@ -291,7 +291,7 @@ def threadMain(threadName, delay):
                     # f.write(timeString + " " + testString + "\n")
                     # f.close()
 
-                    ticketDetailNC = {"channel": detail_slack_notice_channel, "text": slackApp_postUser + " Ticket Detail :" + timeString + " " + testString}
+                    ticketDetailNC = {"channel": detail_slack_notice_channel, "text": " Ticket Detail :" + timeString + " " + testString}
                     postSlackAPP(ticketDetailNC)
 
                     time.sleep(3)
