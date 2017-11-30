@@ -291,7 +291,7 @@ def threadMain(threadName, delay):
                     # f.write(timeString + " " + testString + "\n")
                     # f.close()
 
-                    ticketDetailNC = {"channel": detail_slack_notice_channel, "text": " Ticket Detail :" + timeString + " " + testString}
+                    ticketDetailNC = {"channel": detail_slack_notice_channel, "text": " Ticket Detail : " + timeString + "          " + testString}
                     postSlackAPP(ticketDetailNC)
 
                     time.sleep(3)
