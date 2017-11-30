@@ -160,7 +160,7 @@ def threadOffline(threadName, delay):
         # print i
         # i += 1
         if (flag1 == False) and (flag2 == False):
-            print u"网络连接失败"
+            print "Abnormal network"
             netErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   网络异常，请注意！！！"}
             postSlackAPP(netErrorNC)
             # netMonitoringErr = {"status": "err"}
@@ -227,7 +227,7 @@ def threadMain(threadName, delay):
             print u"进入未受理标签失败"
             # browser.refresh()
             #     print u"获取元素失败，请正常登出后重启脚本"
-            ackErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   自动受理脚本异常！！（异常详情：找不到未受理标签）"}
+            ackErrorNC = {"channel": slack_channel, "text": slackApp_postUser + " Remedy script exception! ! (Abnormal details: Can not find the ACK label)"}
             postSlackAPP(ackErrorNC)
 
             # netMonitoringStop = {"status": "stop"}
@@ -278,20 +278,20 @@ def threadMain(threadName, delay):
 
                     try:   # 警告框处理
                         browser.switch_to_alert().accept()
-                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   已确认警告弹窗"}
+                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   accept alert box"}
                         postSlackAPP(ackAlertNC)
-                        print "已确认警告弹窗"
+                        print "accept alert box"
                     except :
-                        print "未找到警告框"
+                        print "no such alert box"
                         # print e
 
                     timeString = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))  # 获取当前时间
-                    f = open("ticket.log", "a+")
-                    f.read()
-                    f.write(timeString + " " + testString + "\n")
-                    f.close()
+                    # f = open("ticket.log", "a+")
+                    # f.read()
+                    # f.write(timeString + " " + testString + "\n")
+                    # f.close()
 
-                    ticketDetailNC = {"channel": detail_slack_notice_channel, "text": slackApp_postUser + u" 处理详情： " + timeString + " " + testString}
+                    ticketDetailNC = {"channel": detail_slack_notice_channel, "text": slackApp_postUser + " Ticket Detail :" + timeString + " " + testString}
                     postSlackAPP(ticketDetailNC)
 
                     time.sleep(3)
@@ -299,9 +299,9 @@ def threadMain(threadName, delay):
 
 
                 except:
-                    print u"受理按钮获取失败 || 添加初始响应失败"
+                    print "Accept button failed to get OR Failed to add initial response"
 
-                    ackLableErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   捕获异常，请检查脚本状态"}
+                    ackLableErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   fech exception, please confirm with remedy script"}
                     postSlackAPP(ackLableErrorNC)
 
                     # netMonitoringStop = {"status": "stop"}
@@ -318,11 +318,11 @@ def threadMain(threadName, delay):
 
                     try:   # 警告框处理
                         browser.switch_to_alert().accept()
-                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   已确认警告弹窗"}
+                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   accept alert box"}
                         postSlackAPP(ackAlertNC)
-                        print "已确认警告弹窗"
+                        print "accept alert box"
                     except :
-                        print "未找到警告框"
+                        print "no such alert box"
                         # print e
 
 
