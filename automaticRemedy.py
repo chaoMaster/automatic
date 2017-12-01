@@ -13,6 +13,7 @@ import time
 
 import json
 import urllib2
+import requests
 
 import sys
 import getopt
@@ -58,15 +59,28 @@ configPath = "config.ini"
 #     sys.exit()
 
 
+postdata = {"teamId": "20"}
+requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId", data=json.dumps(postdata))
+onduty = requestdata.json()
 
+# print onduty[0]
+# print onduty[1]
+# print onduty[0].get("slackId")
+# print onduty[1].get("slackId")
+
+requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getShiftRemedyAccountInfo")
+loginInfo = requestdata.json()
+
+# print loginInfo.get("remedyLoginId")
+# print loginInfo.get("remedypassword")
 
 try:
     config = ConfigParser.ConfigParser()
     with open(configPath, 'r+') as cfgfile:
         config.readfp(cfgfile)
 
-    username = config.get("info", "username")
-    password = config.get("info", "password")
+    username = loginInfo.get("remedyLoginId")
+    password = loginInfo.get("remedypassword")
     driverpath = config.get("info", "driverpath")
     audioPath = config.get("info", "audiopath")
 
@@ -74,7 +88,10 @@ try:
     detail_slack_notice_channel = "#random"
 
     slackAPP_postMessageAPI = config.get("info", "slackAPP_postMessageAPI")
-    slackApp_postUser = config.get("info", "slackApp_postUser")
+    # slackApp_postUser = config.get("info", "slackApp_postUser")
+    slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
+
 except:
     print "ERR : no configuration \n"
     print "please create configuration file\n"
@@ -105,6 +122,14 @@ def postNetStatus(postMessage):
     netRequest = urllib2.Request(url=slackAPP_setRemedyNetListenTrue, headers=header,
                                  data=json.dumps(postMessage))
     response = urllib2.urlopen(netRequest)
+
+
+
+
+currentRemedyID = {"channel": slack_channel, "text": " Currently used remedy account : " + username}
+postSlackAPP(currentRemedyID)
+
+
 
 def NetCheck(ip):   #检测网络状况
     try:
