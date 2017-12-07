@@ -59,9 +59,10 @@ configPath = "config.ini"
 #     sys.exit()
 
 
-postdata = {"teamId": "20"}
-requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId", data=json.dumps(postdata))
-onduty = requestdata.json()
+# postdata = {"teamId": "20"}
+# requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId", data=json.dumps(postdata))
+# onduty = requestdata.json()
+# slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
 
 # print onduty[0]
 # print onduty[1]
@@ -89,7 +90,7 @@ try:
 
     slackAPP_postMessageAPI = config.get("info", "slackAPP_postMessageAPI")
     # slackApp_postUser = config.get("info", "slackApp_postUser")
-    slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
 
 
 except:
@@ -173,6 +174,13 @@ def NetCheck(ip):   #检测网络状况
 
 def threadOffline(threadName, delay):
     i = 1
+
+    postdata = {"teamId": "20"}
+    requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                                data=json.dumps(postdata))
+    onduty = requestdata.json()
+    slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
     netMonitoringStart = {"channel": slack_channel, "user": slackApp_postUser, "swi": "open"}
     postNetSwitch(netMonitoringStart)
     while True:
@@ -180,13 +188,24 @@ def threadOffline(threadName, delay):
         flag1 = NetCheck("www.baidu.com")
         flag2 = NetCheck("chinabluemix.itsm.unisysedge.cn")
         netMonitoringContinue = {"bo": "true"}
-        postNetStatus(netMonitoringContinue)
+        try:
+            postNetStatus(netMonitoringContinue)
+        except:
+            offlineBrowser = webdriver.Chrome(executable_path=driverpath)
+            offlineBrowser.get(audioPath)
         # print flag
         # print i
         # i += 1
         if (flag1 == False) and (flag2 == False):
             print "Abnormal network"
-            netErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   网络异常，请注意！！！"}
+
+            postdata = {"teamId": "20"}
+            requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                                        data=json.dumps(postdata))
+            onduty = requestdata.json()
+            slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
+            netErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   Abnormal network !!!"}
             postSlackAPP(netErrorNC)
             # netMonitoringErr = {"status": "err"}
             # postNetMonitoring(netMonitoringErr)
@@ -252,6 +271,13 @@ def threadMain(threadName, delay):
             print u"进入未受理标签失败"
             # browser.refresh()
             #     print u"获取元素失败，请正常登出后重启脚本"
+
+            postdata = {"teamId": "20"}
+            requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                                        data=json.dumps(postdata))
+            onduty = requestdata.json()
+            slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
             ackErrorNC = {"channel": slack_channel, "text": slackApp_postUser + " Remedy script exception! ! (Abnormal details: Can not find the ACK label)"}
             postSlackAPP(ackErrorNC)
 
@@ -303,6 +329,14 @@ def threadMain(threadName, delay):
 
                     try:   # 警告框处理
                         browser.switch_to_alert().accept()
+
+                        postdata = {"teamId": "20"}
+                        requestdata = requests.post(
+                            "http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                            data=json.dumps(postdata))
+                        onduty = requestdata.json()
+                        slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
                         ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   accept alert box"}
                         postSlackAPP(ackAlertNC)
                         print "accept alert box"
@@ -326,6 +360,12 @@ def threadMain(threadName, delay):
                 except:
                     print "Accept button failed to get OR Failed to add initial response"
 
+                    postdata = {"teamId": "20"}
+                    requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                                                data=json.dumps(postdata))
+                    onduty = requestdata.json()
+                    slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
                     ackLableErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   fech exception, please confirm with remedy script"}
                     postSlackAPP(ackLableErrorNC)
 
@@ -343,6 +383,14 @@ def threadMain(threadName, delay):
 
                     try:   # 警告框处理
                         browser.switch_to_alert().accept()
+
+                        postdata = {"teamId": "20"}
+                        requestdata = requests.post(
+                            "http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                            data=json.dumps(postdata))
+                        onduty = requestdata.json()
+                        slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+
                         ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   accept alert box"}
                         postSlackAPP(ackAlertNC)
                         print "accept alert box"
