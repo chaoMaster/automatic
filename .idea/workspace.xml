@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3042701c-e216-4764-8c28-1959861e3e7a" name="Default" comment="">
+    <list default="true" id="3042701c-e216-4764-8c28-1959861e3e7a" name="Default" comment="version 2.3 新增获取值班人信息">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/automaticRemedy.py" afterPath="$PROJECT_DIR$/automaticRemedy.py" />
     </list>
@@ -29,8 +29,8 @@
       <file leaf-file-name="automaticRemedy.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/automaticRemedy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="77" column="4" lean-forward="true" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+            <state relative-caret-position="327">
+              <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding>
                 <element signature="e#25#55#0" expanded="true" />
               </folding>
@@ -429,7 +429,14 @@
       <option name="project" value="LOCAL" />
       <updated>1512128083396</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="version 2.3 新增获取值班人信息">
+      <created>1512689435126</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1512689435126</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -513,7 +520,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/automaticRemedy.py</url>
-          <line>384</line>
+          <line>386</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
@@ -974,8 +981,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/automaticRemedy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="77" column="4" lean-forward="true" selection-start-line="77" selection-start-column="4" selection-end-line="77" selection-end-column="4" />
+        <state relative-caret-position="327">
+          <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding>
             <element signature="e#25#55#0" expanded="true" />
           </folding>

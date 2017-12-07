@@ -69,6 +69,8 @@ configPath = "config.ini"
 # print onduty[0].get("slackId")
 # print onduty[1].get("slackId")
 
+
+
 requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getShiftRemedyAccountInfo")
 loginInfo = requestdata.json()
 
