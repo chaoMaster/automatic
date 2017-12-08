@@ -92,3 +92,16 @@ driver 下载地址：http://chromedriver.storage.googleapis.com/index.html
          （配置文件需要修改）
          
          由于此次更新还需完善，因此只更新源码
+         
+  v2.2 ------
+  
+          解决一些 bug
+          
+  v2.3 ------
+  
+          新增获取值班人员信息
+          
+  v2.4 ------
+  
+          1.新增对网络监测模块 post 请求出异常处理
+          2.新增动态获取值班人信息
