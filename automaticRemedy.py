@@ -294,7 +294,7 @@ def threadMain(threadName, delay):
         finally:
 
             try:
-                WebDriverWait(browser, 300, 0.5).until(EC.visibility_of_element_located(locator2))  # 模拟等待 时间无限大
+                WebDriverWait(browser, 480, 0.5).until(EC.visibility_of_element_located(locator2))  # 模拟等待 时间无限大
 
                 testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text # 过滤 测试 或者 test
                 if ((enTestString in testString) == False) and ((cnTestString in testString) == False) and ((enTestString2 in testString) == False) and ((enTestString3 in testString) == False):
