@@ -7,6 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import ElementNotVisibleException
 from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import time
@@ -293,7 +294,7 @@ def threadMain(threadName, delay):
         finally:
 
             try:
-                WebDriverWait(browser, 30000000, 0.5).until(EC.visibility_of_element_located(locator2))  # 模拟等待 时间无限大
+                WebDriverWait(browser, 300, 0.5).until(EC.visibility_of_element_located(locator2))  # 模拟等待 时间无限大
 
                 testString = browser.find_element_by_xpath(".//*[@id='T302087200']/tbody/tr[2]/td[2]/nobr/span").text # 过滤 测试 或者 test
                 if ((enTestString in testString) == False) and ((cnTestString in testString) == False) and ((enTestString2 in testString) == False) and ((enTestString3 in testString) == False):
@@ -304,6 +305,12 @@ def threadMain(threadName, delay):
                     testBrowser = webdriver.Chrome(executable_path=driverpath)
                     testBrowser.get(audioPath)
                     # exit()
+
+            except TimeoutException:
+
+                print "WebDriverWait Timeout and refresh"
+                browser.refresh()
+
             finally:
                 try:
                     browser.find_element_by_xpath(".//*[@id='arid_WIN_2_536870940']").send_keys("in progress")  # 添加初始响应
@@ -359,17 +366,35 @@ def threadMain(threadName, delay):
 
 
 
+
+
+
                 except:
                     print "Accept button failed to get OR Failed to add initial response"
 
-                    postdata = {"teamId": "20"}
-                    requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
-                                                data=json.dumps(postdata))
-                    onduty = requestdata.json()
-                    slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+                    # postdata = {"teamId": "20"}
+                    # requestdata = requests.post("http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                    #                             data=json.dumps(postdata))
+                    # onduty = requestdata.json()
+                    # slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+                    #
+                    # ackLableErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   fech exception, please confirm with remedy script"}
+                    # postSlackAPP(ackLableErrorNC)
 
-                    ackLableErrorNC = {"channel": slack_channel, "text": slackApp_postUser + "   fech exception, please confirm with remedy script"}
-                    postSlackAPP(ackLableErrorNC)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     # netMonitoringStop = {"status": "stop"}
                     # postNetMonitoring(netMonitoringStop)
