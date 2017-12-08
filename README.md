@@ -105,3 +105,8 @@ driver 下载地址：http://chromedriver.storage.googleapis.com/index.html
   
           1.新增对网络监测模块 post 请求出异常处理
           2.新增动态获取值班人信息
+  
+  v2.5 ------
+  
+          1.模拟监听过程中每过一段时间刷新一次，逻辑上解决因为网络问题导致的黑色弹窗
+          2.减少异常触发时向 slack 报告频率
