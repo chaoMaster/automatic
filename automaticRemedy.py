@@ -339,14 +339,14 @@ def threadMain(threadName, delay):
                     try:   # 警告框处理
                         browser.switch_to_alert().accept()
 
-                        postdata = {"teamId": "20"}
-                        requestdata = requests.post(
-                            "http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
-                            data=json.dumps(postdata))
-                        onduty = requestdata.json()
-                        slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+                        # postdata = {"teamId": "20"}
+                        # requestdata = requests.post(
+                        #     "http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                        #     data=json.dumps(postdata))
+                        # onduty = requestdata.json()
+                        # slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
 
-                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   accept alert box"}
+                        ackAlertNC = {"channel": slack_channel, "text": "   accept alert box"}
                         postSlackAPP(ackAlertNC)
                         print "accept alert box"
                     except :
@@ -411,14 +411,14 @@ def threadMain(threadName, delay):
                     try:   # 警告框处理
                         browser.switch_to_alert().accept()
 
-                        postdata = {"teamId": "20"}
-                        requestdata = requests.post(
-                            "http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
-                            data=json.dumps(postdata))
-                        onduty = requestdata.json()
-                        slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
+                        # postdata = {"teamId": "20"}
+                        # requestdata = requests.post(
+                        #     "http://124.251.110.252/21vPaasAOM/api/shift/getOnDutyUsersByTeamId",
+                        #     data=json.dumps(postdata))
+                        # onduty = requestdata.json()
+                        # slackApp_postUser = "<@" + onduty[0].get("slackId") + "> <@" + onduty[1].get("slackId") + ">"
 
-                        ackAlertNC = {"channel": slack_channel, "text": slackApp_postUser + "   accept alert box"}
+                        ackAlertNC = {"channel": slack_channel, "text": "   accept alert box"}
                         postSlackAPP(ackAlertNC)
                         print "accept alert box"
                     except :
